@@ -1,24 +1,42 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
 import './App.css';
+import ShowRow from './components/ShowRow';
 
-function App() {
+const App = () => {
+  const [rows, setRows] = useState([]);
+  
+  let showRows = [];
+  const shows = [
+    {id: 0, title: 'lol', overview: 'pewpew'},
+    {id: 1, title: 'lol2', overview: 'pewpew2'}
+  ];
+
+  shows.forEach(show => showRows.push(<ShowRow show={show}/>));
+
+  useEffect(() => {
+    setRows(showRows);
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+      <table className='titleBar'>
+        <tbody>
+          <tr>
+            <td>
+              <img width="50" src="logo192.png"/>
+            </td>
+            <td width="8"/>
+            <td>
+              <h1>Movies Challenge</h1>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+
+      <input className='searchBar' placeholder="Enter search term" />
+      {rows}
     </div>
   );
 }
