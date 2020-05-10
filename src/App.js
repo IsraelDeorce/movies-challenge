@@ -47,7 +47,7 @@ const App = () => {
             </td>
             <td width="8"/>
             <td>
-              <h1>Movies Challenge</h1>
+              <h1>Shows Challenge</h1>
             </td>
           </tr>
         </tbody>
