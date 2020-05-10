@@ -11,7 +11,7 @@ const ShowRow = ({ show }) => {
 					</td>
 					<td>
 						{show.name && show.name}
-						{show.summary && show.summary}
+						{show.summary && <span dangerouslySetInnerHTML={{__html: show.summary}}></span>}
 					</td>
 				</tr>
 			</tbody>
