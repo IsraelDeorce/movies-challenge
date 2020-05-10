@@ -3,3 +3,7 @@
     background-color: white;
     padding: 20px;
 }
+
+.Show-details-td span{
+    font-weight: bold;
+}
