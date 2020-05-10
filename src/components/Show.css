@@ -7,3 +7,8 @@
 .Show-details-td span{
     font-weight: bold;
 }
+
+.Show-details-td p{
+    margin-top: 2px;
+    margin-bottom: 2px;
+}

@@ -8,7 +8,7 @@ const myInit = {
 
 const ShowsService = {
   getEpisodes: (id) => fetch(`${baseUrl}${search}${id}/episodes`, myInit),
-  getCew: (id) => fetch(`${baseUrl}${search}${id}/crew`, myInit),
+  getCrew: (id) => fetch(`${baseUrl}${search}${id}/crew`, myInit),
   getCast: (id) => fetch(`${baseUrl}${search}${id}/cast`, myInit)
 };
 

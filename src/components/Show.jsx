@@ -1,76 +1,100 @@
 import React, { useState, useEffect } from 'react';
 import './Show.css';
+import ShowService from '../services/showService';
+import { getJsonOrEmptyArray } from '../services/utils';
 
-// Episodes
-// Show Episodes List {{url}}/shows/:id/episodes
-// pegar count e link?
+const getShowExtraDetails = async showId => {
+  let extraDetails = {
+    episodes: '--',
+    createdBy: '--',
+    cast: '--'
+  };
 
-// Created by
-// Show Crew {{url}}/shows/:id/crew
-// find type Creator
+  const episodesPromise = ShowService.getEpisodes(showId).then(promise => getJsonOrEmptyArray(promise));
+  const crewPromise = ShowService.getCrew(showId).then(promise => getJsonOrEmptyArray(promise));
+  const castPromise = ShowService.getCast(showId).then(promise => getJsonOrEmptyArray(promise));
 
-// cast
-// Show Cast {{url}}/shows/:id/cast
-// person {}; character{}
+  const singlePromise = await Promise
+    .all([
+      episodesPromise,
+      crewPromise,
+      castPromise
+    ]);
 
+  const getCreatorsNames = crewArray => crewArray.filter(crew => crew.type && crew.type === 'Creator').map(creator => creator.person && creator.person.name).join(', ');
+  
+  const getCastNames = castArray => castArray.map(cast => {
+    let castDescription = '';
+    const personName = cast.person && cast.person.name;
+    const characterName = cast.character && cast.character.name;
 
-// console.log('isArray: ', Array.isArray(responseJson));
-// responseJson.forEach((show) => {
-//   const showInfo = show.show;
-//   showInfo &&
-//     rows.push({
-//       id: showInfo.id,
-//       name: showInfo.name,
-//       image: showInfo.image,
-//       summary: showInfo.summary,
-//     });
-// });
+    if (personName && characterName) castDescription = castDescription.concat(personName, ' as ', characterName);
+    else if (personName) castDescription = castDescription.concat(personName);
+    return castDescription;
+  }).join(', ');
+
+  extraDetails.episodes = `${singlePromise[0].length} episodes`;
+  extraDetails.createdBy = getCreatorsNames(singlePromise[1]) || '--';
+  extraDetails.cast = getCastNames(singlePromise[2]) || '--';
+  return extraDetails;
+};
 
 const filterShowJson = (show) => {
   let filteredShow = {
-    name: 'name',
+    name: '--',
     poster: 'imgPlaceholder.jpg',
-    duration: 'duration',
-    scheduleTime: 'schedule Time',
-    scheduleDays: 'schedule Days',
-    status : 'status',
-    showType: 'showType',
-    genres: 'genres',
-    // episodes: '',
-    // createdBy: '',
-    // cast: ''
+    duration: '--',
+    scheduleTime: '--',
+    scheduleDays: '--',
+    status: '--',
+    showType: '--',
+    genres: '--'
   };
 
   if (!show || !show.show) return filteredShow;
 
   const showDetail = show.show;
   const formatScheduleDays = (daysArray) => {
-    if(!Array.isArray(daysArray) || !daysArray.length) return '';
+    if (!Array.isArray(daysArray) || !daysArray.length) return '';
     let scheduleDays = 'days: ';
-    return scheduleDays.concat(daysArray.join(','));
+    return scheduleDays.concat(daysArray.join(', '));
   }
 
   showDetail.name && (filteredShow.name = showDetail.name);
-  showDetail.image &&showDetail.image.medium && (filteredShow.poster = showDetail.image.medium);
+  showDetail.image && showDetail.image.medium && (filteredShow.poster = showDetail.image.medium);
   showDetail.runtime && (filteredShow.duration = showDetail.runtime);
-  showDetail.schedule && showDetail.schedule.time && (filteredShow.scheduleTime = `time: ${showDetail.schedule.time}`)
-  showDetail.schedule && showDetail.schedule.days && (filteredShow.scheduleDays = formatScheduleDays(showDetail.schedule.days))
+  showDetail.schedule && showDetail.schedule.time && (filteredShow.scheduleTime = `time: ${showDetail.schedule.time}`);
+  showDetail.schedule && showDetail.schedule.days && (filteredShow.scheduleDays = formatScheduleDays(showDetail.schedule.days));
   showDetail.status && (filteredShow.status = showDetail.status);
   showDetail.type && (filteredShow.showType = showDetail.type);
-  showDetail.genres && (filteredShow.genres = showDetail.genres.join(','));
-  
+  showDetail.genres && (filteredShow.genres = showDetail.genres.join(', '));
+
   return filteredShow;
 };
 
 const Show = ({ show }) => {
-  const [showDetails, setShowResults] = useState(false);
+  const [displayDetails, setDisplayDetail] = useState(false);
   const [filteredShow, setFilteredShow] = useState(show);
+  const [showId, setShowId] = useState(0);
 
   useEffect(() => {
-    setFilteredShow(filterShowJson(show));
-  }, []);
+    let filteredShow = filterShowJson(show);
+    if (showId)
+      getShowExtraDetails(showId).then(extraDetails => {
+        filteredShow.episodes = extraDetails.episodes;
+        filteredShow.createdBy = extraDetails.createdBy;
+        filteredShow.cast = extraDetails.cast;
+        setFilteredShow(filteredShow);
+      });
+    else setFilteredShow(filteredShow);
 
-  const handleOnClick = () => setShowResults(!showDetails);
+  }, [showId, show]);
+
+  const handleOnClick = () => {
+    setDisplayDetail(!displayDetails);
+    if (!showId)
+      setShowId(show && show.show && show.show.id);
+  };
 
   return (
     <table key={show.id && show.id} >
@@ -81,7 +105,7 @@ const Show = ({ show }) => {
               <img alt='poster' src={filteredShow.poster} />
             </div>
           </td>
-          {showDetails &&
+          {displayDetails &&
             <td className="Show-details-td">
               <p><span>Name:</span> {filteredShow.name}</p>
               <p><span>Duration:</span> {filteredShow.duration}</p>
@@ -89,6 +113,9 @@ const Show = ({ show }) => {
               <p><span>Status:</span> {filteredShow.status}</p>
               <p><span>Show Type:</span> {filteredShow.showType}</p>
               <p><span>Genres:</span> {filteredShow.genres}</p>
+              <p><span>Episodes:</span> {filteredShow.episodes}</p>
+              <p><span>CreatedBy:</span> {filteredShow.createdBy}</p>
+              <p><span>Cast:</span> {filteredShow.cast}</p>
             </td>
           }
         </tr>
