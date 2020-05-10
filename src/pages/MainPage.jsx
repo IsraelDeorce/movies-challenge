@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import "../App.css";
-import ShowRow from "../components/ShowRow";
+import './MainPage.css';
+import Show from "../components/Show";
 import SearchService from "../services/searchService";
 
 const showSearch = async (searchValue) => {
@@ -39,15 +39,16 @@ const MainPage = () => {
   return (
     <body className='App-body'>
       <input
-        className="searchBar"
-        placeholder="Enter a show name"
+        className='searchBar'
+        placeholder='Enter a show search term'
         value={searchTerm}
         onChange={handleChange}
       />
-
-      {shows.map((show) => (
-        <ShowRow show={show} />
-      ))}
+      <div className='Shows-div'>
+        {shows.map((show) => (
+          <Show show={show} />
+        ))}
+      </div>
     </body>
   )
 }
