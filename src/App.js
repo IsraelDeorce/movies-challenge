@@ -1,21 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import ShowRow from './components/ShowRow';
+import SearchService from './services/searchService';
+
+const showSearch = async (searchValue) => {
+  let rows = [];
+  const response = await SearchService.get(searchValue);
+  if(response.ok) {
+    const responseJson = await response.json();
+    responseJson.forEach(show => {
+      const showInfo = show.show;
+      showInfo && rows.push(
+        {
+          id: showInfo.id,
+          name: showInfo.name,
+          image: showInfo.image,
+          summary: showInfo.summary
+        });
+    });
+  }   
+  return rows;
+}
 
 const App = () => {
-  const [rows, setRows] = useState([]);
+  const [shows, setShows] = useState([]);
+  const [searchTerm, setSearchTerm] = React.useState('');
   
-  let showRows = [];
-  const shows = [
-    {id: 0, title: 'lol', overview: 'pewpew'},
-    {id: 1, title: 'lol2', overview: 'pewpew2'}
-  ];
-
-  shows.forEach(show => showRows.push(<ShowRow show={show}/>));
+  const handleChange = async (event) => {
+    setSearchTerm(event.target.value);
+  };
 
   useEffect(() => {
-    setRows(showRows);
-  }, []);
+    showSearch(searchTerm).then(res => {
+      setShows(res)
+    });
+  }, [searchTerm]);
 
   return (
     <div className="App">
@@ -24,7 +43,7 @@ const App = () => {
         <tbody>
           <tr>
             <td>
-              <img width="50" src="logo192.png"/>
+              <img alt="poster" width="50" src="logo192.png"/>
             </td>
             <td width="8"/>
             <td>
@@ -34,9 +53,15 @@ const App = () => {
         </tbody>
       </table>
 
+      <input 
+        className='searchBar' 
+        placeholder='Enter search term'
+        value={searchTerm}
+        onChange={handleChange}/>
 
-      <input className='searchBar' placeholder="Enter search term" />
-      {rows}
+      {shows.map(show => (
+        <ShowRow show={show}/>
+      ))}
     </div>
   );
 }
