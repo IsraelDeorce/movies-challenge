@@ -7,8 +7,11 @@ const MainPage = () => {
   const [userInput, setUserInput] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
 
-  const handleKeyPress = async (event) => {
+  const handleOnChange = async (event) => {
     setUserInput(event.target.value);
+  };
+
+  const handleKeyPress = async (event) => {
     if (event.key === 'Enter') setSearchTerm(userInput);
   };
 
@@ -20,6 +23,7 @@ const MainPage = () => {
           type='text'
           className='search-input'
           placeholder='Enter a show search term and press ENTER'
+          onChange={handleOnChange}
           onKeyPress={handleKeyPress}
         />
       </div>
