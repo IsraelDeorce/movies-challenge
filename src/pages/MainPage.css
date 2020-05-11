@@ -1,9 +1,10 @@
 .search-div {
   display: flex;
 }
-  .search-input {
-    font-size: 24px;
-    display: block;
-    flex: 1;
-    padding: 8px 0 8px 16px;
-  }
+
+.search-input {
+  font-size: 24px;
+  display: block;
+  flex: 1;
+  padding: 8px 0 8px 16px;
+}

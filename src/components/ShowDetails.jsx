@@ -1,18 +1,45 @@
-import React from "react";
+import React from 'react';
 import './ShowDetails.css'
 
-const ShowDetails = ({ filteredShow }) => {
+const ShowDetails = ({ filteredShow = {} }) => {
   return (
-    <td className="ShowDetails-td">
-      <p><span>Name:</span> {filteredShow.name}</p>
-      <p><span>Duration:</span> {filteredShow.duration}</p>
-      <p><span>Schedule:</span> {filteredShow.scheduleTime} {filteredShow.scheduleDays}</p>
-      <p><span>Status:</span> {filteredShow.status}</p>
-      <p><span>Show Type:</span> {filteredShow.showType}</p>
-      <p><span>Genres:</span> {filteredShow.genres}</p>
-      <p><span>Episodes:</span> {filteredShow.episodes}</p>
-      <p><span>CreatedBy:</span> {filteredShow.createdBy}</p>
-      <p><span>Cast:</span> {filteredShow.cast}</p>
+    <td id='show-details-td' className='ShowDetails-td'>
+      <p>
+        <label>Name:</label>
+        <span> {filteredShow.name}</span> 
+      </p>
+      <p>
+        <label>Duration:</label>
+        <span> {filteredShow.duration}</span> 
+      </p>
+      <p>
+        <label>Schedule:</label>
+        <span> {filteredShow.scheduleTime} {filteredShow.scheduleDays}</span> 
+      </p>
+      <p>
+        <label>Status:</label>
+        <span> {filteredShow.status}</span> 
+      </p>
+      <p>
+        <label>Show Type:</label>
+        <span> {filteredShow.showType}</span> 
+      </p>
+      <p>
+        <label>Genres:</label>
+        <span> {filteredShow.genres}</span> 
+      </p>
+      <p>
+        <label>Episodes:</label>
+        <span> {filteredShow.episodes}</span> 
+      </p>
+      <p>
+        <label>CreatedBy:</label>
+        <span> {filteredShow.createdBy}</span> 
+      </p>
+      <p>
+        <label>Cast:</label>
+        <span> {filteredShow.cast}</span> 
+      </p>
     </td>
   )
 }

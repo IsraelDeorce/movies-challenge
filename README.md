@@ -51,10 +51,10 @@ Some decisions to highlight were:
 - I decided not to use Redux since it would add unnecessary complexity to an app that could easily handle the state using only [Hooks](https://reactjs.org/docs/hooks-intro.html)  
 - The App was deployed to Heroku because it was a simple to do, and it supports automatically deploys with the Github tool  
 - The javascript components were organized in well defined layers inside the **src** folder:  
-- **src**  
-- **components** - Components to be rendered in different situations depending on the state  
-- **pages** - Well defined pages that group more than one components (we only have the MainPage)  
-- **services** - Handles external services calls  
+	- **src**  
+		- **components** - Components to be rendered in different situations depending on the state  
+		- **pages** - Well defined pages that group more than one components (we only have the MainPage)  
+		- **services** - Handles external services calls  
   
 ### Are there any improvements you could make to your submission?  
 

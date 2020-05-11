@@ -9,20 +9,20 @@ const MainPage = () => {
 
   const handleKeyPress = async (event) => {
     setUserInput(event.target.value);
-    if(event.key === 'Enter') setSearchTerm(userInput);
+    if (event.key === 'Enter') setSearchTerm(userInput);
   };
 
   return (
-    <div>
+    <div id='mainPage-id'>
       <MainHeader />
-      <div className='search-div'>
-      <input
-        type='text'
-        className='search-input'
-        placeholder='Enter a show search term and press ENTER'
-        onKeyPress={handleKeyPress}
-      />
-      </div>      
+      <div id='mainPage-input-id' className='search-div'>
+        <input
+          type='text'
+          className='search-input'
+          placeholder='Enter a show search term and press ENTER'
+          onKeyPress={handleKeyPress}
+        />
+      </div>
       <Catalogue searchTerm={searchTerm} />
     </div>
   )

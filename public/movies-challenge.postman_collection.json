@@ -1,0 +1,114 @@
+{
+	"info": {
+		"_postman_id": "11eee461-07b0-4896-8b01-78d60bdcd485",
+		"name": "movies-challenge",
+		"description": "HP company job challenge",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Show search",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/search/shows?q=:param",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"search",
+						"shows"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": ":param"
+						}
+					]
+				},
+				"description": "Search through all the shows in our database by the show's name. A fuzzy algorithm is used (with a fuzziness value of 2), meaning that shows will be found even if your query contains small typos. Results are returned in order of relevancy (best matches on top) and contain each show's full information.\r\n\r\nThe most common usecase for this endpoint is when you're building a local mapping of show names to TVmaze ID's and want to make sure that you're mapping to exactly the right show, and not to a different show that happens to have the same name. By presenting each show's basic information in a UI, you can have the end-user pick a specific entry from that list, and have your application store the chosen show's ID or URL. Any subsequent requests for information on that show can then be directly made to that show's URL.\r\n\r\nURL: /search/shows?q=:query\r\nExample: http://api.tvmaze.com/search/shows?q=girls"
+			},
+			"response": []
+		},
+		{
+			"name": "Show episode list",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/shows/:id/episodes",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"shows",
+						":id",
+						"episodes"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": ""
+						}
+					]
+				},
+				"description": "A complete list of episodes for the given show. Episodes are returned in their airing order, and include full episode information. By default, specials are not included in the list.\r\n\r\nURL: /shows/:id/episodes\r\n(optional) specials: do include specials in the list\r\nExample: http://api.tvmaze.com/shows/1/episodes\r\nExample: http://api.tvmaze.com/shows/1/episodes?specials=1"
+			},
+			"response": []
+		},
+		{
+			"name": "Show crew",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/shows/:id/crew",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"shows",
+						":id",
+						"crew"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": ""
+						}
+					]
+				},
+				"description": "A list of main crew for a show. Each crew item is a combination of a person and their crew type.\r\n\r\nURL: /shows/:id/crew\r\nExample: http://api.tvmaze.com/shows/1/crew"
+			},
+			"response": []
+		},
+		{
+			"name": "Show cast",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/shows/:id/cast",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"shows",
+						":id",
+						"cast"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": ""
+						}
+					]
+				},
+				"description": "A list of main cast for a show. Each cast item is a combination of a person and a character. Items are ordered by importance, which is determined by the total number of appearances of the given character in this show.\r\n\r\nURL: /shows/:id/cast\r\nExample: http://api.tvmaze.com/shows/1/cast"
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
