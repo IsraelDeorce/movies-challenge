@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './Show.css';
 import ShowDetails from './ShowDetails';
 import ShowService from '../services/showService';
 import { getJsonOrEmptyArray } from '../services/utils';
@@ -99,12 +100,12 @@ const Show = ({ show }) => {
   };
 
   return (
-    <table key={show && show.id} >
+    <table id='show-table-id' key={show && show.id} >
       <tbody>
         <tr>
           <td>
-            <div onClick={handleOnClick}>
-              <img alt='poster' src={filteredShow && filteredShow.poster} />
+            <div>
+              <img onClick={handleOnClick} alt='poster' src={filteredShow && filteredShow.poster} />
             </div>
           </td>
           {displayDetails && <ShowDetails filteredShow={filteredShow}/>}
