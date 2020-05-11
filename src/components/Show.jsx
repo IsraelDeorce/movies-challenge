@@ -5,6 +5,7 @@ import { getJsonOrEmptyArray } from '../services/utils';
 
 const defaultData = '--';
 
+/** Filters a given show details by its basic object returned from show search */
 const getFilteredShow = (show) => {
   let filteredShow = {
     name: defaultData,
@@ -38,6 +39,7 @@ const getFilteredShow = (show) => {
   return filteredShow;
 };
 
+/** Filters a show extra details after calling de api three times passing the show's id */
 const getShowExtraDetails = async showId => {
   let extraDetails = {
     episodes: defaultData,
@@ -76,7 +78,7 @@ const getShowExtraDetails = async showId => {
 
 const Show = ({ show }) => {
   const [displayDetails, setDisplayDetail] = useState(false);
-  const [filteredShow, setFilteredShow] = useState(show);
+  const [filteredShow, setFilteredShow] = useState({});
   const [showId, setShowId] = useState(0);
 
   useEffect(() => {
@@ -97,12 +99,12 @@ const Show = ({ show }) => {
   };
 
   return (
-    <table key={show.id && show.id} >
+    <table key={show && show.id} >
       <tbody>
         <tr>
           <td>
             <div onClick={handleOnClick}>
-              <img alt='poster' src={filteredShow.poster} />
+              <img alt='poster' src={filteredShow && filteredShow.poster} />
             </div>
           </td>
           {displayDetails && <ShowDetails filteredShow={filteredShow}/>}

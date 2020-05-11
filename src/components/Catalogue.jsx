@@ -4,7 +4,7 @@ import Show from "../components/Show"
 import SearchService from "../services/searchService";
 import { getJsonOrEmptyArray } from '../services/utils';
 
-const showsSearch = async searchValue => await SearchService.get(searchValue).then(promise => getJsonOrEmptyArray(promise)); 
+export const showsSearch = async searchValue => await SearchService.get(searchValue).then(promise => getJsonOrEmptyArray(promise)); 
 
 const Catalogue = ({searchTerm}) => {
   const [shows, setShows] = useState([]);

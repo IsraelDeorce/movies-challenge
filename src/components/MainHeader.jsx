@@ -3,16 +3,16 @@ import './MainHeader.css';
 
 const MainHeader = () => {
   return (
-    <header className="MainHeader-header">
+    <header id='main-header-id' className="MainHeader-header">
       <table >
         <tbody>
           <tr>
             <td>
-              <img alt="poster" width="50" src="logo192.png" />
+              <img id='img-header-id' alt="poster" src="logo192.png" />
             </td>
             <td width="8" />
             <td>
-              <h1>Shows Challenge</h1>
+              <h1 id='h1-header-id'>Shows Challenge</h1>
             </td>
           </tr>
         </tbody>

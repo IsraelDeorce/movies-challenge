@@ -64,6 +64,7 @@ Some decisions to highlight were:
 	  - Disable the Search Bar input when the search is still fetching
 	  - The show descriptions could be set to a fixed place and some animations could be added to make it render smoother
 	  - The Search Bar could have a clickable icon that indicates it is used for searches intead of a long text
+	  - add code quality dependencies such as eslint and prop-types
 	  - Add something to give feedback to the user when a search does not return any show
 	  - Add a better image placeholder when a shows does not have a poster
 	  - Make it prettier in general terms
