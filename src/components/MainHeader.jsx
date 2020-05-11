@@ -1,9 +1,10 @@
 import React from 'react';
+import './MainHeader.css';
 
 const MainHeader = () => {
   return (
-    <header>
-      <table className="titleBar">
+    <header className="MainHeader-header">
+      <table >
         <tbody>
           <tr>
             <td>

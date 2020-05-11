@@ -1,36 +1,29 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import './MainPage.css';
-import Show from "../components/Show";
-import SearchService from "../services/searchService";
-import { getJsonOrEmptyArray } from '../services/utils';
-
-const showSearch = async searchValue => await SearchService.get(searchValue).then(promise => getJsonOrEmptyArray(promise)); 
+import MainHeader from '../components/MainHeader';
+import Catalogue from '../components/Catalogue';
 
 const MainPage = () => {
-  const [shows, setShows] = useState([]);
+  const [userInput, setUserInput] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
 
-  const handleChange = async (event) => {
-    setSearchTerm(event.target.value);
+  const handleKeyPress = async (event) => {
+    setUserInput(event.target.value);
+    if(event.key === 'Enter') setSearchTerm(userInput);
   };
-
-  useEffect(() => {
-    showSearch(searchTerm).then((res) => {
-      setShows(res);
-    });
-  }, [searchTerm]);
 
   return (
     <div>
+      <MainHeader />
+      <div className='search-div'>
       <input
-        className='searchBar'
-        placeholder='Enter a show search term'
-        value={searchTerm}
-        onChange={handleChange}
+        type='text'
+        className='search-input'
+        placeholder='Enter a show search term and press ENTER'
+        onKeyPress={handleKeyPress}
       />
-      <div className='Shows-div'>
-        {shows.map((show, i) => <Show key={i} show={show} /> )}
-      </div>
+      </div>      
+      <Catalogue searchTerm={searchTerm} />
     </div>
   )
 }
